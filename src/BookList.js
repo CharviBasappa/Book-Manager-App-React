@@ -1,21 +1,19 @@
-import React, { useContext } from "react";
-import { BookContext } from "./BookContext";
+import React from "react";
+import { useSelector, useDispatch } from "react-redux";
+import { removeBook } from "./features/books/booksSlice";
 
 const BookList = () => {
-  const { books, dispatch } = useContext(BookContext);
+  const books = useSelector((state) => state.books);
+  const dispatch = useDispatch();
 
-  if (books.length === 0) return <p>No books yet 📭</p>;
+  if (books.length === 0) return <p>No books added.</p>;
 
   return (
     <ul>
       {books.map((book) => (
         <li key={book.id}>
-          <strong>{book.title}</strong> by {book.author}
-          <button
-            onClick={() => dispatch({ type: "REMOVE_BOOK", payload: book.id })}
-          >
-            ❌ Remove
-          </button>
+          {book.title} by {book.author}
+          <button onClick={() => dispatch(removeBook(book.id))}>Remove</button>
         </li>
       ))}
     </ul>
