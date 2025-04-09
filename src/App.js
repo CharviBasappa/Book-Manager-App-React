@@ -1,24 +1,23 @@
-import logo from './logo.svg';
-import './App.css';
+import React, { useEffect, useRef } from "react";
+import { BookProvider } from "./BookContext";
+import BookForm from "./BookForm";
+import BookList from "./BookList";
 
 function App() {
+  const titleRef = useRef(null);
+
+  useEffect(() => {
+    titleRef.current.focus();
+  }, []);
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <BookProvider>
+      <div style={{ padding: "2rem" }}>
+        <h2 ref={titleRef}>📚 My Book Manager</h2>
+        <BookForm />
+        <BookList />
+      </div>
+    </BookProvider>
   );
 }
 
