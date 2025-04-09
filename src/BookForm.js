@@ -1,36 +1,30 @@
-import React, { useState, useContext } from "react";
-import { BookContext } from "./BookContext";
+import React, { useState } from "react";
+import { useDispatch } from "react-redux";
+import { addBook } from "./features/books/booksSlice";
 
 const BookForm = () => {
-  const { dispatch } = useContext(BookContext);
+  const dispatch = useDispatch();
   const [title, setTitle] = useState("");
   const [author, setAuthor] = useState("");
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    const newBook = {
-      id: Date.now(),
-      title,
-      author,
-    };
-    dispatch({ type: "ADD_BOOK", payload: newBook });
+    dispatch(addBook({ id: Date.now(), title, author }));
     setTitle("");
     setAuthor("");
   };
 
   return (
-    <form onSubmit={handleSubmit} style={{ marginBottom: "1rem" }}>
+    <form onSubmit={handleSubmit}>
       <input
-        placeholder="Book title"
         value={title}
         onChange={(e) => setTitle(e.target.value)}
-        required
+        placeholder="Title"
       />
       <input
-        placeholder="Author"
         value={author}
         onChange={(e) => setAuthor(e.target.value)}
-        required
+        placeholder="Author"
       />
       <button type="submit">Add Book</button>
     </form>
